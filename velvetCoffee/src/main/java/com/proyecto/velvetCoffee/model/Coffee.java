@@ -7,117 +7,136 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "coffeeShop")
+@Table(name = "coffee_Shop")
 
 public class Coffee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)  // La anotación del atributo id será Auto Incrementable
-    private Integer idCafe;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)// La anotación del atributo id será Auto Incrementable
+    private Integer id;
 
     //      Hacemos llamamiento de la anotación @Collumn "paisOrigen", no acepta valores nulos (nullable), con un máximo de 70 caracteres (length) estos datos se vinculan con la base de datos de manera automática, una vez sincronice todo lo necesario
-    @Column(name = "País de Origen", nullable = false, length = 70)
-    private String paisOrigen;
+    @Column(name = "nombre", nullable = false, length = 90)
+    private String nombre;
 
-    @Column(name = "Región", nullable = false, length = 100)
-    private String regionOrigen;
+    @Column(name = "pais_Origen", nullable = false, length = 70)
+    private String pais_Origen;
 
-    @Column(name = "Altitud", nullable = false, length = 50)
+    @Column(name = "region", nullable = false, length = 100)
+    private String region;
+
+    @Column(name = "altitud", nullable = false, length = 50)
     private int altitud;
 
-    @Column(name = "Variedad")
-    private Date variedad;
+    @Column(name = "variedad")
+    private String variedad;
 
-    @Column(name = "Marca", nullable = false, length = 90)
-    private String nombreComercial;
 
-    @Column(name = "Descripción del producto", length = 250)
-    private String descripcionProducto;
+    @Column(name = "descripcion", nullable = true, length = 250)
+    private String descripcion;
 
-    @Column(name = "Formato", nullable = false)
-    private String formatoVenta;
+    @Column(name = "formato", nullable = false)
+    private String formato;
 
-    @Column(name = "Peso unitario", nullable = false)
-    private double pesoGramos;
+    @Column(name = "codigo_Barras", nullable = false, scale = 13)
+    private String codigo_Barras;
 
-    @Column(name = "Fecha de caducidad", nullable = false)
-    private int vidaUtil;
+    @Column(name = "precio_Unidad", nullable = false)
+    private Long precio_Unidad;
+    @Column(name = "peso_Unidad", nullable = false)
+    private double peso_Unidad;
 
-    @Column(name = "Código de Barras", nullable = false)
-    private String codigoBarras;
+    @Temporal(TemporalType.DATE)  // esto me indica que, llegada la fecha de caducidad, se elimina
+    @Column(name = "fecha_Caducidad", nullable = false)
+    private Date fecha_Caducidad;
 
-    @Column(name = "Precio/Unidad", nullable = false)
-    private Long precioUnitario;
+    @Column(name = "stock_Disponible")
+    private int stock_Disponible;
 
-    @Column(name = "Stock disponible")
-    private int stockDisponible;
+    @Column(name = "estado_actual", nullable = false)
+    private boolean estadoActual;
 
-    @Column(name = "Estado", nullable = false)
-    private boolean isEstadoActual;
+    @Column(name = "is_En_Oferta")
+    private boolean is_En_Oferta;
 
-    @Column(name = "Oferta~$")
-    private boolean isEnOferta;
+    @Column(name = "tipo_Moneda", nullable = false)
+    private String tipo_Moneda;
 
-    @Column(name = "USD|EUR|YEN|PEN", nullable = false)
-    private String tipoMoneda;
-
-    @Column(name = "Aroma", nullable = false)
+    @Column(name = "aroma", nullable = false)
     private String aroma;
 
-    @Column(name = "Sensación", nullable = false)
-    private List<String> SensacionSorber;  // Ej: ["Denso", "Medio"]
+    @ElementCollection
+    @CollectionTable(name = "coffee_sensacion_paladar", joinColumns = @JoinColumn(name = "coffee_id"))
+    @Column(name = "sensacion_paladar", nullable = false)
+    private List<String> sensacion_Paladar;  // Ej: ["Denso", "Medio"]
 
-    @Column(name = "Dulzor", nullable = false)
-    private List<String> Dulzor; // Ej: ["Media", "Brillante", "Alta", "Muy Alta", "Baja", "Muy baja"]
+    @ElementCollection
+    @CollectionTable(name = "coffee_dulzor", joinColumns = @JoinColumn(name = "coffee_id"))
+    @Column(name = "dulzor", nullable = false)
+    private List<String> dulzor; // Ej: ["Media", "Brillante", "Alta", "Muy Alta", "Baja", "Muy baja"]
 
-    @Column(name = "Acidez", nullable = false)
-    private List<String> Acidez;   // Ej: ["Media", "Brillante", "Alta", "Muy Alta", "Baja", "Muy baja"]
+    @Column(name = "acidez", nullable = false)
+    private List<String> acidez;   // Ej: ["Media", "Brillante", "Alta", "Muy Alta", "Baja", "Muy baja"]
 
-    @Column(name = "Sabores", nullable = false)
-    private List <String> Sabor;  // Ej: [Dulce y Frutal --> [Dulce, frutos rojos y miel", "Azúcar moreno, manzana, canela"] , || ÁCIDO Y CÍTRICO --> ["Acidez brillante, limón" , "Mandarina, té verde, floral", Toronja, panela, té jazmín"] || DULCE Y FLORAL --> ["Miel, jazmín, lavanda", "Azúcar moreno, rosa, durazno", "Caramelo, flor de azahar, albaricoque"] || AMARGO Y CHOCOLATEADO --> ["Cacao amargo, nuez, tierra húmeda", "Chocolate oscuro, tabaco, especias", Madera, avellana, café tostado"] || FRUTAL Y ESPECIADO --> ["Frutas tropicales, jengibre", "Mango, pimienta rosa, panela", Papaya, canela, clavo"] || CÍTRICO Y HERBAL --> ["lima, menta, manzanilla", "Pomelo, hierba luisa, albahaca", Cítricos, eucalipto, té verde"] || CUERPO ALTO Y DULZOR INTENSO --> ["Melaza, cacao, pasas", "Dátil, vainilla, chocolate con leche", "Miel espesa, almendra, sirope"]
+    @ElementCollection
+    @CollectionTable(name = "coffee_sabor", joinColumns = @JoinColumn(name = "coffee_id"))
+    @Column(name = "sabor", nullable = false)
+    private List <String> sabor;  // Ej: [Dulce y Frutal --> [Dulce, frutos rojos y miel", "Azúcar moreno, manzana, canela"] , || ÁCIDO Y CÍTRICO --> ["Acidez brillante, limón" , "Mandarina, té verde, floral", Toronja, panela, té jazmín"] || DULCE Y FLORAL --> ["Miel, jazmín, lavanda", "Azúcar moreno, rosa, durazno", "Caramelo, flor de azahar, albaricoque"] || AMARGO Y CHOCOLATEADO --> ["Cacao amargo, nuez, tierra húmeda", "Chocolate oscuro, tabaco, especias", Madera, avellana, café tostado"] || FRUTAL Y ESPECIADO --> ["Frutas tropicales, jengibre", "Mango, pimienta rosa, panela", Papaya, canela, clavo"] || CÍTRICO Y HERBAL --> ["lima, menta, manzanilla", "Pomelo, hierba luisa, albahaca", Cítricos, eucalipto, té verde"] || CUERPO ALTO Y DULZOR INTENSO --> ["Melaza, cacao, pasas", "Dátil, vainilla, chocolate con leche", "Miel espesa, almendra, sirope"]
 
-    @Column(name = "Puntuación Especializada", nullable = false)
-    private Double puntajeEspecializado;  // puntuación de catadores sobre 100
+    @Column(name = "puntaje_especializado", nullable = false)
+    private Double puntaje_Especializado;  // puntuación de catadores sobre 100
 
-    @Column(name = "Análisis sensorial", nullable = false, length = 250)
-    private String perfilSensorial;  // descripción breve de cada uno por grupos de List <String> Sabor , por grupos, NO unidades
+    @Column(name = "perfil_sensorial", nullable = false, length = 250)
+    private String perfil_Sensorial;  // descripción breve de cada uno por grupos de List <String> Sabor , por grupos, NO unidades
 
-    @Column(name = "Grado de tostado")
-    private String gradoTostado; // EJ: Claro, medio, oscuro
+    @Column(name = "grado_tostado")
+    private String grado_tostado; // EJ: Claro, medio, oscuro
 
-    @Column(name = "Certificaciones",nullable = false)
+    @Column(name = "certificaciones",nullable = false)
     private String certificacion;
 
-    @Column(name = "Almacenamiento recomendado", nullable = false)
-    private String almacenamientoRecomendado;  // 	Condiciones ideales de conservación (buscar diferentes formas)
+    @Column(name = "almacenamiento_recomendado", nullable = false)
+    private String almacenamiento_Recomendado;  // 	Condiciones ideales de conservación (buscar diferentes formas)
 
-    @Column(name = "Método de Preparación Recomendable", nullable = false,length = 250)
-    private String metodoPreparacionSugerido;  // aquí, añadiré el método más acorde de preparación de cada uno de los productos. EJ: 	V60, prensa francesa, espresso, etc.
+    @Column(name = "metodo_preparacion_sugerido", nullable = false,length = 250)
+    private String metodo_Preparacion_Sugerido;  // aquí, añadiré el método más acorde de preparación de cada uno de los productos. EJ: 	V60, prensa francesa, espresso, etc.
+
 
 
     // getters y setters
-    public Integer getIdCliente() {
-        return idCliente;
+
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getPaisOrigen() {
-        return paisOrigen;
+        return pais_Origen;
     }
 
     public void setPaisOrigen(String paisOrigen) {
-        this.paisOrigen = paisOrigen;
+        this.pais_Origen = paisOrigen;
     }
 
-    public String getRegionOrigen() {
-        return regionOrigen;
+    public String getRegion() {
+        return region;
     }
 
-    public void setRegionOrigen(String regionOrigen) {
-        this.regionOrigen = regionOrigen;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public int getAltitud() {
@@ -128,100 +147,93 @@ public class Coffee {
         this.altitud = altitud;
     }
 
-    public Date getVariedad() {
+    public String getVariedad() {
         return variedad;
     }
 
-    public void setVariedad(Date variedad) {
+    public void setVariedad(String variedad) {
         this.variedad = variedad;
     }
 
-    public String getNombreComercial() {
-        return nombreComercial;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setNombreComercial(String nombreComercial) {
-        this.nombreComercial = nombreComercial;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getDescripcionProducto() {
-        return descripcionProducto;
+    public String getFormato() {
+        return formato;
     }
 
-    public void setDescripcionProducto(String descripcionProducto) {
-        this.descripcionProducto = descripcionProducto;
+    public void setFormato(String formato) {
+        this.formato = formato;
     }
 
-    public String getFormatoVenta() {
-        return formatoVenta;
+    public String getCodigo_Barras() {
+        return codigo_Barras;
     }
 
-    public void setFormatoVenta(String formatoVenta) {
-        this.formatoVenta = formatoVenta;
+    public void setCodigo_Barras(String codigo_Barras) {
+        this.codigo_Barras = codigo_Barras;
     }
 
-    public double getPesoGramos() {
-        return pesoGramos;
+    public Long getPrecio_Unidad() {
+        return precio_Unidad;
     }
 
-    public void setPesoGramos(double pesoGramos) {
-        this.pesoGramos = pesoGramos;
+    public void setPrecio_Unidad(Long precio_Unidad) {
+        this.precio_Unidad = precio_Unidad;
     }
 
-    public int getVidaUtil() {
-        return vidaUtil;
+    public double getPeso_Unidad() {
+        return peso_Unidad;
     }
 
-    public void setVidaUtil(int vidaUtil) {
-        this.vidaUtil = vidaUtil;
+    public void setPeso_Unidad(double peso_Unidad) {
+        this.peso_Unidad = peso_Unidad;
     }
 
-    public String getCodigoBarras() {
-        return codigoBarras;
+    public Date getFecha_Caducidad() {
+        return fecha_Caducidad;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
+    public void setFecha_Caducidad(Date fecha_Caducidad) {
+        this.fecha_Caducidad = fecha_Caducidad;
     }
 
-    public Long getPrecioUnitario() {
-        return precioUnitario;
+    public int getStock_Disponible() {
+        return stock_Disponible;
     }
 
-    public void setPrecioUnitario(Long precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public void setStock_Disponible(int stock_Disponible) {
+        this.stock_Disponible = stock_Disponible;
     }
 
-    public int getStockDisponible() {
-        return stockDisponible;
+    public boolean is_Estado_Actual() {
+        return false;
     }
 
-    public void setStockDisponible(int stockDisponible) {
-        this.stockDisponible = stockDisponible;
+
+    public void setIs_Estado_Actual(boolean is_Estado_Actual) {
+        this.estadoActual = is_Estado_Actual;
     }
 
-    public boolean isEstadoActual() {
-        return isEstadoActual;
+    public boolean is_En_Oferta() {
+        return is_En_Oferta;
     }
 
-    public void setEstadoActual(boolean estadoActual) {
-        isEstadoActual = estadoActual;
+    public void setIs_En_Oferta(boolean is_En_Oferta) {
+        this.is_En_Oferta = is_En_Oferta;
     }
 
-    public boolean isEnOferta() {
-        return isEnOferta;
+    public String getTipo_Moneda() {
+        return tipo_Moneda;
     }
 
-    public void setEnOferta(boolean enOferta) {
-        isEnOferta = enOferta;
-    }
-
-    public String getTipoMoneda() {
-        return tipoMoneda;
-    }
-
-    public void setTipoMoneda(String tipoMoneda) {
-        this.tipoMoneda = tipoMoneda;
+    public void setTipoMoneda(String tipo_Moneda) {
+        this.tipo_Moneda = tipo_Moneda;
     }
 
     public String getAroma() {
@@ -232,52 +244,60 @@ public class Coffee {
         this.aroma = aroma;
     }
 
-    public List<String> getSensacionSorber() {
-        return SensacionSorber;
+    public List<String> getSensacion_Paladar() {
+        return sensacion_Paladar;
     }
 
-    public void setSensacionSorber(List<String> sensacionSorber) {
-        SensacionSorber = sensacionSorber;
+    public void setSensacion_Paladar(List<String> sensacion_Paladar) {
+        this.sensacion_Paladar = sensacion_Paladar;
     }
 
     public List<String> getDulzor() {
-        return Dulzor;
+        return dulzor;
     }
 
     public void setDulzor(List<String> dulzor) {
-        Dulzor = dulzor;
+        this.dulzor = dulzor;
     }
 
     public List<String> getAcidez() {
-        return Acidez;
+        return acidez;
     }
 
     public void setAcidez(List<String> acidez) {
-        Acidez = acidez;
+        this.acidez = acidez;
     }
 
     public List<String> getSabor() {
-        return Sabor;
+        return sabor;
     }
 
     public void setSabor(List<String> sabor) {
-        Sabor = sabor;
+        this.sabor = sabor;
     }
 
-    public Double getPuntajeEspecializado() {
-        return puntajeEspecializado;
+    public Double getPuntaje_Especializado() {
+        return puntaje_Especializado;
     }
 
-    public void setPuntajeEspecializado(Double puntajeEspecializado) {
-        this.puntajeEspecializado = puntajeEspecializado;
+    public void setPuntaje_Especializado(Double puntaje_Especializado) {
+        this.puntaje_Especializado = puntaje_Especializado;
     }
 
-    public String getPerfilSensorial() {
-        return perfilSensorial;
+    public String getPerfil_Sensorial() {
+        return perfil_Sensorial;
     }
 
-    public void setPerfilSensorial(String perfilSensorial) {
-        this.perfilSensorial = perfilSensorial;
+    public void setPerfil_Sensorial(String perfil_Sensorial) {
+        this.perfil_Sensorial = perfil_Sensorial;
+    }
+
+    public String getGrado_tostado() {
+        return grado_tostado;
+    }
+
+    public void setGrado_tostado(String grado_tostado) {
+        this.grado_tostado = grado_tostado;
     }
 
     public String getCertificacion() {
@@ -288,20 +308,21 @@ public class Coffee {
         this.certificacion = certificacion;
     }
 
-    public String getAlmacenamientoRecomendado() {
-        return almacenamientoRecomendado;
+    public String getAlmacenamiento_Recomendado() {
+        return almacenamiento_Recomendado;
     }
 
-    public void setAlmacenamientoRecomendado(String almacenamientoRecomendado) {
-        this.almacenamientoRecomendado = almacenamientoRecomendado;
+    public void setAlmacenamiento_Recomendado(String almacenamiento_Recomendado) {
+        this.almacenamiento_Recomendado = almacenamiento_Recomendado;
     }
 
-    public String getMetodoPreparacionSugerido() {
-        return metodoPreparacionSugerido;
+    public String getMetodo_Preparacion_Sugerido() {
+        return metodo_Preparacion_Sugerido;
     }
 
-    public void setMetodoPreparacionSugerido(String metodoPreparacionSugerido) {
-        this.metodoPreparacionSugerido = metodoPreparacionSugerido;
+    public void setMetodo_Preparacion_Sugerido(String metodo_Preparacion_Sugerido) {
+        this.metodo_Preparacion_Sugerido = metodo_Preparacion_Sugerido;
     }
 }
+
 

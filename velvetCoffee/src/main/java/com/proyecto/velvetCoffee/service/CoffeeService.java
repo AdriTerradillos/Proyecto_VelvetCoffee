@@ -16,7 +16,7 @@ public class CoffeeService implements ICoffeeService {
     private ICoffeeRepository coffeeRepo;
 
     @Override
-    public Coffee created(Coffee coffee) {
+    public Coffee created(Coffee coffee) { // ← renombrar de "created" a "create"
         return coffeeRepo.save(coffee);
     }
 
@@ -27,13 +27,14 @@ public class CoffeeService implements ICoffeeService {
 
     @Override
     public Coffee findById(Integer id) {
-       Optional <Coffee> coffeeOptional = coffeeRepo.findById(id);
+       Optional <Coffee> coffeeOptional;
+        coffeeOptional = coffeeRepo.findById(id);
         return coffeeOptional.orElse(null);
     }
 
     @Override
     public List<Coffee> findAll() {
-        return coffeeRepo.findAll();
+        return (List<Coffee>) coffeeRepo.findAll();
     }
 
     @Override

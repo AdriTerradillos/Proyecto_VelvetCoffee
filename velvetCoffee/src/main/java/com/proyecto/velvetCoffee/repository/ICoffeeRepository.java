@@ -1,6 +1,12 @@
 package com.proyecto.velvetCoffee.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.proyecto.velvetCoffee.model.Coffee;
+import org.springframework.data.repository.CrudRepository;
 
-public interface ICoffeeRepository extends JpaRepository<Coffee, Integer> {
+
+public interface ICoffeeRepository extends CrudRepository<Coffee, Integer> {
+
+
+
+
 }

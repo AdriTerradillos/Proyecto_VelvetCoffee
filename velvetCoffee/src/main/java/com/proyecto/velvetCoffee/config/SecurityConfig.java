@@ -10,7 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import  org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,21 +33,16 @@ public class SecurityConfig {
     private ServicioPersonalizadoAlUsuario servicioPersonalizadoAlUsuario;
 
     @Bean
-    public  SecurityFilterChain filterChain(HttpSecurity http) throws  Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/authz/**").permitAll()
-                        // requestMatchers("/cafes/**).hasRole("USER")
-                        // requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .sessionManagement(sm ->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
+            .csrf().disable()
+            .authorizeHttpRequests()
+                .requestMatchers("/coffeeShop/**").authenticated()
+                .anyRequest().permitAll()
+            .and()
+            .httpBasic();
+        
         return http.build();
-
     }
 
     @Bean

@@ -1,29 +1,51 @@
 package com.proyecto.velvetCoffee.res;
 
 import com.proyecto.velvetCoffee.model.Coffee;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 
-// importar librerías lombok, lo utilizamos para decirle al código que no hace falta sobreescribir el contructor, getters y setters de la clase
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor;
-
 public class PageResponseCoffee {
+    private List<Coffee> content;
+    private int totalElements;
+    private int totalPages;
+    private int currentPage;
 
-    // generamos atributos
+    public PageResponseCoffee(List<Coffee> content, int totalElements, int totalPages, int currentPage) {
+        this.content = content;
+        this.totalElements = totalElements;
+        this.totalPages = totalPages;
+        this.currentPage = currentPage;
+    }
 
-    private List<Coffee> cafes;
-    private int totalElementos;
-    private int totalPaginas;
-    private int paginaActual;
+    // Getters and Setters
+    public List<Coffee> getContent() {
+        return content;
+    }
 
+    public void setContent(List<Coffee> content) {
+        this.content = content;
+    }
 
+    public int getTotalElements() {
+        return totalElements;
+    }
 
+    public void setTotalElements(int totalElements) {
+        this.totalElements = totalElements;
+    }
 
+    public int getTotalPages() {
+        return totalPages;
+    }
 
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
 }

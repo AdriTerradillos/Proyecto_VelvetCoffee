@@ -4,7 +4,7 @@ import com.proyecto.velvetCoffee.model.Coffee;
 
 import java.util.List;
 
-public interface ICoffeeService {
+public interface ICafeService {
 
     Coffee created(Coffee coffee);
     Coffee update(Coffee coffee);

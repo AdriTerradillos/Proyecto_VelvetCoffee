@@ -1,45 +1,24 @@
-package com.proyecto.velvetCoffee.model;
+package com.proyecto.velvetCoffee.repository;
+
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.*;
+
+/*@Entity
+@Table(name = "cafes")*/
 
 
-/**
- * --PAUTAS--
- * 1º) generamos las anotaciones correspondientes '@Id' + Atributos de la clase
- * 2º) hacemos llamamiento a método de la clase Usuario()
- * 3º) Agregamos todos los atributos de la clase...
+public class ModelCoffee {
 
-        --> ...Hacemos llamamiento de la anotación @Collumn "paisOrigen", no acepta valores nulos (nullable),
-                con un máximo de 70 caracteres (length) estos datos se vinculan con la base de datos de manera automática,
-                una vez sincronice todo lo necesario
-
- * 3º) generamos contructor
- * 4º) getters y setters
- */
-
-
-@Entity
-@Table(name = "coffee_Shop")
-
-public class Coffee {
-
-    // 1º)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)// La anotación del atributo id será Auto Incrementable
     private Long id;
 
+    @Column(name = "nombres")
+    private String name;
 
-    // 2º)
-    public Coffee() {
-
-    }
-
-
-   // 3
     @Column(name = "nombre", nullable = false, length = 90)
     private String nombre;
 
@@ -127,13 +106,13 @@ public class Coffee {
 
 
     // 3º)
-    public Coffee(Long id, String nombre, String paisOrigen, String region, int altitud,
-                  String variedad, String descripcion, String formato, String codigoBarras,
-                  double precioUnidad, double peso_Unidad, Date fechaCaducidad, int stockDisponible,
-                  boolean estadoActual, boolean isEnOferta, String tipoMoneda, String aroma,
-                  List<String> sensacionPaladar, List<String> dulzor, List<String> acidez, List<String> sabor,
-                  Double puntajeEspecializado, String perfilSensorial, String gradoTostado, String certificacion,
-                  String almacenamientoRecomendado, String metodoPreparacionSugerido) {
+    public void Cafe(Long id, String nombre, String paisOrigen, String region, int altitud,
+                     String variedad, String descripcion, String formato, String codigoBarras,
+                     double precioUnidad, double peso_Unidad, Date fechaCaducidad, int stockDisponible,
+                     boolean estadoActual, boolean isEnOferta, String tipoMoneda, String aroma,
+                     List<String> sensacionPaladar, List<String> dulzor, List<String> acidez, List<String> sabor,
+                     Double puntajeEspecializado, String perfilSensorial, String gradoTostado, String certificacion,
+                     String almacenamientoRecomendado, String metodoPreparacionSugerido) {
 
 
         this.id = id;
@@ -175,7 +154,6 @@ public class Coffee {
         this.id = id;
     }
 
-
     public String getNombre() {
         return nombre;
     }
@@ -183,7 +161,6 @@ public class Coffee {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
 
     public String getPaisOrigen() {
         return paisOrigen;
@@ -193,7 +170,6 @@ public class Coffee {
         this.paisOrigen = paisOrigen;
     }
 
-
     public String getRegion() {
         return region;
     }
@@ -201,7 +177,6 @@ public class Coffee {
     public void setRegion(String region) {
         this.region = region;
     }
-
 
     public int getAltitud() {
         return altitud;
@@ -211,7 +186,6 @@ public class Coffee {
         this.altitud = altitud;
     }
 
-
     public String getVariedad() {
         return variedad;
     }
@@ -219,7 +193,6 @@ public class Coffee {
     public void setVariedad(String variedad) {
         this.variedad = variedad;
     }
-
 
     public String getDescripcion() {
         return descripcion;
@@ -229,7 +202,6 @@ public class Coffee {
         this.descripcion = descripcion;
     }
 
-
     public String getFormato() {
         return formato;
     }
@@ -237,7 +209,6 @@ public class Coffee {
     public void setFormato(String formato) {
         this.formato = formato;
     }
-
 
     public String getCodigoBarras() {
         return codigoBarras;
@@ -247,7 +218,6 @@ public class Coffee {
         this.codigoBarras = codigoBarras;
     }
 
-
     public double getPrecioUnidad() {
         return precioUnidad;
     }
@@ -255,7 +225,6 @@ public class Coffee {
     public void setPrecioUnidad(double precioUnidad) {
         this.precioUnidad = precioUnidad;
     }
-
 
     public double getPeso_Unidad() {
         return peso_Unidad;
@@ -265,7 +234,6 @@ public class Coffee {
         this.peso_Unidad = peso_Unidad;
     }
 
-
     public Date getFechaCaducidad() {
         return fechaCaducidad;
     }
@@ -273,7 +241,6 @@ public class Coffee {
     public void setFechaCaducidad(Date fechaCaducidad) {
         this.fechaCaducidad = fechaCaducidad;
     }
-
 
     public int getStockDisponible() {
         return stockDisponible;
@@ -283,7 +250,6 @@ public class Coffee {
         this.stockDisponible = stockDisponible;
     }
 
-
     public boolean isEstadoActual() {
         return estadoActual;
     }
@@ -291,7 +257,6 @@ public class Coffee {
     public void setEstadoActual(boolean estadoActual) {
         this.estadoActual = estadoActual;
     }
-
 
     public boolean isEnOferta() {
         return isEnOferta;
@@ -301,7 +266,6 @@ public class Coffee {
         isEnOferta = enOferta;
     }
 
-
     public String getTipoMoneda() {
         return tipoMoneda;
     }
@@ -309,7 +273,6 @@ public class Coffee {
     public void setTipoMoneda(String tipoMoneda) {
         this.tipoMoneda = tipoMoneda;
     }
-
 
     public String getAroma() {
         return aroma;
@@ -319,7 +282,6 @@ public class Coffee {
         this.aroma = aroma;
     }
 
-
     public List<String> getSensacionPaladar() {
         return sensacionPaladar;
     }
@@ -327,7 +289,6 @@ public class Coffee {
     public void setSensacionPaladar(List<String> sensacionPaladar) {
         this.sensacionPaladar = sensacionPaladar;
     }
-
 
     public List<String> getDulzor() {
         return dulzor;
@@ -337,7 +298,6 @@ public class Coffee {
         this.dulzor = dulzor;
     }
 
-
     public List<String> getAcidez() {
         return acidez;
     }
@@ -345,7 +305,6 @@ public class Coffee {
     public void setAcidez(List<String> acidez) {
         this.acidez = acidez;
     }
-
 
     public List<String> getSabor() {
         return sabor;
@@ -355,7 +314,6 @@ public class Coffee {
         this.sabor = sabor;
     }
 
-
     public Double getPuntajeEspecializado() {
         return puntajeEspecializado;
     }
@@ -363,7 +321,6 @@ public class Coffee {
     public void setPuntajeEspecializado(Double puntajeEspecializado) {
         this.puntajeEspecializado = puntajeEspecializado;
     }
-
 
     public String getPerfilSensorial() {
         return perfilSensorial;
@@ -373,7 +330,6 @@ public class Coffee {
         this.perfilSensorial = perfilSensorial;
     }
 
-
     public String getGradoTostado() {
         return gradoTostado;
     }
@@ -381,7 +337,6 @@ public class Coffee {
     public void setGradoTostado(String gradoTostado) {
         this.gradoTostado = gradoTostado;
     }
-
 
     public String getCertificacion() {
         return certificacion;
@@ -391,7 +346,6 @@ public class Coffee {
         this.certificacion = certificacion;
     }
 
-
     public String getAlmacenamientoRecomendado() {
         return almacenamientoRecomendado;
     }
@@ -399,7 +353,6 @@ public class Coffee {
     public void setAlmacenamientoRecomendado(String almacenamientoRecomendado) {
         this.almacenamientoRecomendado = almacenamientoRecomendado;
     }
-
 
     public String getMetodoPreparacionSugerido() {
         return metodoPreparacionSugerido;
@@ -409,7 +362,4 @@ public class Coffee {
         this.metodoPreparacionSugerido = metodoPreparacionSugerido;
     }
 
-
 }
-
-
